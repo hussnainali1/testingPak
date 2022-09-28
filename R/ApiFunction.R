@@ -5,6 +5,16 @@ library(future)
 baseUrl <- "https://api.weatherapi.com/v1/"
 apiKey <- "148193efcfce480cb9591848222809"
 
+#' FetchWeatherData
+#'
+#' @param queryCity A String
+#'
+#' @return DataFrame
+#' @export FetchWeatherData
+#'
+#' @examples
+#' fetchWeatherData("pakistan")
+#'
 fetchWeatherData <- function(queryCity) {
   stopifnot(is.character(queryCity))
 
@@ -17,9 +27,17 @@ fetchWeatherData <- function(queryCity) {
   return(dataframeObj)
 }
 
-# fetchWeatherData("pakistan")
 
-
+#' FetchCurrentWeather
+#'
+#' @param queryCity A String
+#'
+#' @return A DataFrame
+#' @export FetchCurrentWeather
+#'
+#' @examples
+#' fetchCurrentWeather("Pakistan")
+#'
 fetchCurrentWeather <- function(queryCity) {
 
   stopifnot(is.character(queryCity))
@@ -34,5 +52,4 @@ fetchCurrentWeather <- function(queryCity) {
   return(dataframeObj)
 }
 
-fetchCurrentWeather("sweden")
 

@@ -8,5 +8,7 @@
 
 library(testthat)
 library(testingPak)
+library(shiny.web.application)
 
 test_check("testingPak")
+test_check("shiny.web.application")
