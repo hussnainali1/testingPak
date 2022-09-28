@@ -2,14 +2,13 @@ library(httr)
 library(jsonlite)
 library(future)
 
-baseUrl <- "https://api.weatherapi.com/v1/forecast.json"
+baseUrl <- "https://api.weatherapi.com/v1/"
+apiKey <- "148193efcfce480cb9591848222809"
 
 fetchWeatherData <- function(queryCity) {
-
   stopifnot(is.character(queryCity))
 
-  apiKey <- "148193efcfce480cb9591848222809"
-  url <- paste(baseUrl,"?key=",apiKey, "&q=",queryCity, sep="")
+  url <- paste(baseUrl,"forecast.json?key=",apiKey, "&q=",queryCity, sep="")
   getFutureRes <- future(GET(url))
   resValue <- value(getFutureRes)
   content <- content(resValue, "text")
@@ -18,25 +17,22 @@ fetchWeatherData <- function(queryCity) {
   return(dataframeObj)
 }
 
-fetchWeatherData("pakistan")
+# fetchWeatherData("pakistan")
 
 
-# fetchWeatherData1 <- function(queryCity) {
-#
-#   stopifnot(is.character(queryCity))
-#
-#   apiKey <- "148193efcfce480cb9591848222809"
-#   url <- paste(baseUrl,"?key=",apiKey, "&q=",queryCity, sep="")
-#   getFutureRes <- future(GET(url))
-#   resValue <- value(getFutureRes)
-#   content <- content(resValue, "text")
-#   dat <- jsonlite::fromJSON(content, flatten = TRUE)$forecast
-#   dataframeObj <- as.data.frame(dat)
-#   return(dataframeObj)
-# }
-#
-# fetchWeatherData1("pakistan")
-#
-#
-#
-#
+fetchCurrentWeather <- function(queryCity) {
+
+  stopifnot(is.character(queryCity))
+
+  url <- paste(baseUrl,"current.json?key=",apiKey, "&q=",queryCity, sep="")
+  getFutureRes <- future(GET(url))
+  resValue <- value(getFutureRes)
+  content <- content(resValue, "text")
+  dat <- jsonlite::fromJSON(content, flatten = TRUE)$current$temp_c
+   dataframeObj <- as.data.frame(dat)
+   colnames(dataframeObj) <- c("Current Temperature In Degree")
+  return(dataframeObj)
+}
+
+fetchCurrentWeather("sweden")
+
